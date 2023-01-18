@@ -1,5 +1,7 @@
 const app = require("./app");
 const mongoose = require("mongoose");
+const dotenv = require("dotenv");
+dotenv.config();
 
 const { DB_HOST } = process.env;
 
@@ -14,5 +16,3 @@ mongoose
     console.log(error.message);
     process.exit(1);
   });
-
-//""

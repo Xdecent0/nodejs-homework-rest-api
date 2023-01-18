@@ -17,12 +17,17 @@ const contactSchema = Schema(
       type: Boolean,
       default: false,
     },
+    owner: {
+      type: Schema.Types.ObjectId,
+      ref: "user",
+      required: true,
+    },
   },
   { versionKey: false, timestamps: true }
 );
 
 const joiSchema = Joi.object({
-  name: Joi.string().min(3).max(35).required(),
+  name: Joi.string().required(),
   email: Joi.string()
     .email({ minDomainSegments: 2, tlds: { allow: ["com", "net", "ua"] } })
     .required(),
@@ -35,8 +40,8 @@ const joiSchema = Joi.object({
   favorite: Joi.bool(),
 });
 
-const favoriteJoiSchema = Joi.object({
-  favorite: Joi.bool(),
+const statusJoiSchema = Joi.object({
+  status: Joi.string().valid("basic", "sale", "stock").required(),
 });
 
 const Contact = model("contact", contactSchema);
@@ -44,5 +49,5 @@ const Contact = model("contact", contactSchema);
 module.exports = {
   Contact,
   joiSchema,
-  favoriteJoiSchema,
+  statusJoiSchema,
 };

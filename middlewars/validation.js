@@ -1,12 +1,12 @@
-const validateData = (validationSchema) => async (req, res, next) => {
-  try {
-    await validationSchema.validateAsync(req.body);
+const validation = (schema) => {
+  return (req, res, next) => {
+    const { error } = schema.validate(req.body);
+    if (error) {
+      error.status = 400;
+      next(error);
+    }
     next();
-  } catch (error) {
-    return res
-      .status(400)
-      .json({ status: "rejected", code: 400, message: error.message });
-  }
+  };
 };
 
-module.exports = { validateData };
+module.exports = validation;
