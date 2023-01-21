@@ -3,7 +3,9 @@ const { auth, upload, ctrlWrapper } = require("../../middlewars/index.js");
 const {
   getCurrent,
   updateAvatar,
+  verifyEmail,
 } = require("../../controllers/users/index.js");
+const { verify } = require("jsonwebtoken");
 
 const router = express.Router();
 
@@ -14,5 +16,7 @@ router.patch(
   upload.single("avatar"),
   ctrlWrapper(updateAvatar)
 );
+
+router.get("/verify/:verificationToken", ctrlWrapper(verifyEmail));
 
 module.exports = router;
